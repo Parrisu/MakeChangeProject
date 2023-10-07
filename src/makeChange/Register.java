@@ -1,70 +1,103 @@
 package makeChange;
 
+import java.util.Scanner;
 
 public class Register {
 
 	public static void main(String[] args) {
-		/*
-		 * In the cash register we will calculate the amount of change returned to a
-		 * customer based on the purchase price and the amount tendered. We will also
-		 * notify the attendant how many of each type of currency ($20 ,$10 ,$5 ,$1,
-		 * .25c, .10c, .05c, .01c) is needed to make the change for the customer.
-		 * 
-		 * Change will be provided using a combination of the largest bill and coin
-		 * denominations as possible.
-		 * 
-		 * Denominations that are not used will not be displayed.
-		 * if no nickels, nickels does not show.
-		 * 
-		 * Hint: Mod operator
-		 * 
-		 * User Story #1 The user is prompted asking for the price of the item.
-		 * 
-		 * User Story #2 The user is then prompted asking how much money was tendered by
-		 * the customer. ( how much did they give you)
-		 * 
-		 * User Story #3 Display an appropriate message if the customer provided too
-		 * little money or the exact amount. ( no change / not enough money )
-		 * 
-		 * User Story #4 If the amount tendered is more than the cost of the item,
-		 * display the number of bills and coins that should be given to the customer.
-		 * Denominations that are not used will not be displayed.
-		 * 
-		 * Grading This is a graded project. You are to have your project completed and
-		 * pushed to Git by 0830 on Monday morning.
-		 * 
-		 * If the code:
-		 * 
-		 * meets all stated requirements by the due date, you will receive 1 point.
-		 * meets most of the stated requirements by the due date, you may receive .5
-		 * point. does not meet the stated requirements by the due date, you may receive
-		 * 0 points. Here are example test conditions:
-		 * 
-		 * Amount: .67, Tendered: .50, Result: Error message 
-		 * Amount: .67, Tendered: 1.00, Result: 1 quarter, 1 nickel, 3 pennies. 
-		 * Amount: .59, Tendered: 1.00, Result: 1 quarter, 1 dime, 1 nickel, 1 penny. 
-		 * Amount: 3.96, Tendered: 20.00, Result: 1 ten dollar bill, 1 five dollar bill, 1 one dollar bill, 4 pennies.
-		 * 
-		 * max $20, don't worry about $50
-		 * 
-		 * Amount: any amount less than 20.00, Tendered: anything greater than amount: 
-		 * correct denominations for correct change. 
-		 * 
-		 * 
-		 * If the project receives 0 points,
-		 * resubmission for potential partial credit may, at the discretion of the
-		 * instructor, be granted. Ignored assignments are given 0 points with no
-		 * possibility for resubmission.
-		 * 
-		 * no hard coding!
-		 * 
-		 * To turn in a project, you must push it to a GitHub repository named
-		 * MakeChangeProject. You must include a README.md describing how to run your
-		 * program.
-		 * 
-		 * Not required: Methods, but can if you want to.
-		 */
+		Scanner sc = new Scanner(System.in);
+		
+		
+		System.out.println("** Attention Cashier! **\n");
+		System.out.println("Our system shows a customer is trying to purchase an item.\n");
+		System.out.println("Due to a recent issue in cashier theft, I, the \"computer\" will"
+				+ " be determining the amount due.\n");
+		System.out.print("Please enter the cost of the item: ");
+		double cost = sc.nextDouble();
+		sc.nextLine();
+		System.out.println("");
+		
+		
+		System.out.println("Ouch, inflation is really kicking into gear.\n");
+		System.out.print("Now, please enter the amount recieved: ");
+		
+		double tender = sc.nextDouble();
+		sc.nextLine();
+		System.out.println("");
+		
+		tender += .005;
+		
+		if ( tender < cost) {
+			System.err.println("**           ALERT           **");
+			System.err.println("** AMOUNT GIVEN INSUFFICIENT **");
+		}
+		if ( tender == cost) {
+			System.out.println("Exact Amount!");
+			System.out.println("No change required!");
+		}
+		
+		if (tender > cost) {
+			double change = (double)(tender - cost);
+			System.out.printf("Change Due: $" + "%, .2f", (change));
+			System.out.println("\n");
+
+
+			int twenties = 0;
+			int tens = 0;
+			int fives = 0;
+			int ones = 0;
+			int quarters = 0;
+			int dimes = 0;
+			int nickels = 0;
+			int pennies = 0;
+			
+			if (change / 20 > 1) {
+				twenties = (int) (change / 20);
+				change = change % 20;
+				System.out.println("$20: "+twenties);
+			}
+			if (change / 10 > 1) {
+				tens = (int) (change / 10);
+				change = change % 10;
+				System.out.println("$10: "+tens);
+			}
+			if (change / 5 > 1) {
+				fives = (int) (change / 5);
+				change = change % 5;
+				System.out.println("$5:  "+fives);
+			}
+			if (change / 1 > 1) {
+				ones = (int) (change / 1);
+				change = change % 1;
+				System.out.println("$1:  "+ones);
+			}
+			change *= 100;
+			
+			if (change / 25 > 1) {
+				quarters = (int) (change / 25);
+				change = (change % 25);
+				System.out.println("Quarters: "+quarters);
+			}
+			if (change / 10 > 1) {
+				dimes = (int) (change / 10);
+				change = (change % 10);
+				System.out.println("Dimes: "+dimes);
+			}
+			if (change / 5 > 1) {
+				nickels = (int) (change / 5);
+				change = (change % 5);
+				System.out.println("Nickels: "+nickels);
+			}
+			if (change >= 1) {
+				pennies = (int) (change / 1);
+				change = (change % 1);
+				System.out.println("Pennies: "+pennies);
+			}
+
+		}
+		
 
 	}
 
 }
+
